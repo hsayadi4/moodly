@@ -1,0 +1,156 @@
+:root {
+  --primary: #5b5bd6;
+  --bg: #f5f5fa;
+  --text: #1f1f2e;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  /* pour les telephones avec encoche */
+  padding-top: env(safe-area-inset-top);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--primary);
+}
+
+.content {
+  padding: 8px 16px 90px;
+}
+
+h2 {
+  margin: 8px 0 12px;
+}
+
+h3 {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 12px 0 6px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+input:focus {
+  outline: 2px solid var(--primary);
+  border-color: transparent;
+}
+
+.btn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background: var(--primary);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.muted {
+  color: #777;
+}
+
+.small {
+  font-size: 13px;
+}
+
+.error {
+  color: #d93036;
+  font-size: 14px;
+}
+
+.success {
+  color: #1f8a55;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tabs {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  background: white;
+  border-top: 1px solid #e5e5ee;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tabs a {
+  flex: 1;
+  max-width: 240px;
+  text-align: center;
+  padding: 14px 0;
+  color: #777;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.tabs a.router-link-exact-active {
+  color: var(--primary);
+  border-top: 3px solid var(--primary);
+}
