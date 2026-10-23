@@ -6,6 +6,8 @@ Application mobile de suivi du moral des salariés (mood tracking), réalisée d
 
 Il s'agit d'un MVP : on a gardé seulement l'essentiel.
 
+**Démo en ligne :** https://hsayadi4.github.io/moodly/ (version du front où l'API est simulée dans le navigateur, avec des données fictives ; comptes `employe@moodly.demo` et `manager@moodly.demo`, mot de passe `Moodly2026!`). Le vrai projet, avec Strapi, se lance en local comme expliqué plus bas.
+
 ## Fonctionnalités
 
 - Connexion avec gestion des droits (2 rôles : **employé** et **manager**)
