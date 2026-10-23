@@ -6,9 +6,14 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "android": "vite build && cap sync android && cap open android",
+    "sync": "vite build && cap sync"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/preferences": "^8.0.1",
     "chart.js": "^4.5.1",
     "pinia": "^3.0.4",
     "vue": "^3.5.22",
@@ -16,6 +21,7 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
     "@vitejs/plugin-vue": "^6.0.1",
     "vite": "^7.1.12"
   }

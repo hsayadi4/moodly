@@ -1,8 +1,16 @@
 // appels a l'API Strapi
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1337'
-
+// adresse par defaut (fichier .env), modifiable dans l'app depuis l'ecran de login
+let apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:1337'
 let token = null
+
+export function setApiUrl(url) {
+  apiUrl = url.replace(/\/$/, '')
+}
+
+export function getApiUrl() {
+  return apiUrl
+}
 
 export function setToken(newToken) {
   token = newToken
@@ -16,7 +24,7 @@ async function request(path, options = {}) {
 
   let res
   try {
-    res = await fetch(API_URL + '/api' + path, { ...options, headers })
+    res = await fetch(apiUrl + '/api' + path, { ...options, headers })
   } catch (e) {
     throw new Error('Impossible de joindre le serveur')
   }

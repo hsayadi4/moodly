@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { getApiUrl } from '../api'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -10,6 +11,8 @@ const email = ref('')
 const password = ref('')
 const error = ref('')
 const loading = ref(false)
+const showServer = ref(false)
+const serverUrl = ref(getApiUrl())
 
 async function submit() {
   error.value = ''
@@ -24,6 +27,12 @@ async function submit() {
   } finally {
     loading.value = false
   }
+}
+
+// adresse du serveur strapi (utile sur telephone : ip du pc sur le wifi)
+async function saveServer() {
+  await auth.changeServer(serverUrl.value)
+  showServer.value = false
 }
 
 // pour la demo
@@ -58,6 +67,15 @@ function fillDemo(type) {
       <button class="link-btn" @click="fillDemo('employee')">Employé</button>
       <button class="link-btn" @click="fillDemo('manager')">Manager</button>
     </div>
+
+    <div class="server">
+      <button class="link-btn small" @click="showServer = !showServer">⚙️ Serveur</button>
+      <div v-if="showServer" class="card">
+        <label for="server">Adresse de l'API</label>
+        <input id="server" v-model="serverUrl" type="url" placeholder="http://192.168.1.20:1337" />
+        <button class="btn" @click="saveServer">Enregistrer</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -79,5 +97,13 @@ form {
 }
 .demo .link-btn {
   margin: 0 8px;
+}
+.server {
+  margin-top: 24px;
+  text-align: left;
+}
+.server .link-btn {
+  display: block;
+  margin: 0 auto 10px;
 }
 </style>
