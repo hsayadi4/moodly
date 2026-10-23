@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "teams",
+  "info": {
+    "singularName": "team",
+    "pluralName": "teams",
+    "displayName": "Team",
+    "description": "Équipe (membres + manager)"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "members": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "team"
+    },
+    "moods": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mood.mood",
+      "mappedBy": "team",
+      "private": true
+    }
+  }
+}

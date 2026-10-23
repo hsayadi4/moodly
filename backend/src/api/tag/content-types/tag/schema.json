@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tags",
+  "info": {
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "Tag",
+    "description": "Raison associée à une humeur"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 40
+    },
+    "emoji": {
+      "type": "string",
+      "maxLength": 8
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "moods": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::mood.mood",
+      "mappedBy": "tags",
+      "private": true
+    }
+  }
+}

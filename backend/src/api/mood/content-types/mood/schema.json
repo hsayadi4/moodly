@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "moods",
+  "info": {
+    "singularName": "mood",
+    "pluralName": "moods",
+    "displayName": "Mood",
+    "description": "Humeur du jour (auteur anonymisé par un hash)"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "score": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    "day": {
+      "type": "date",
+      "required": true
+    },
+    "authorHash": {
+      "type": "string",
+      "required": true,
+      "private": true
+    },
+    "team": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::team.team",
+      "inversedBy": "moods"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "moods"
+    }
+  }
+}
