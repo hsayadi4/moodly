@@ -24,5 +24,11 @@ function logout() {
     <main class="content">
       <router-view />
     </main>
+
+    <!-- onglets visibles seulement pour les managers -->
+    <nav v-if="auth.isManager" class="tabs">
+      <router-link to="/">😊 Mon humeur</router-link>
+      <router-link to="/team">📊 Mon équipe</router-link>
+    </nav>
   </div>
 </template>

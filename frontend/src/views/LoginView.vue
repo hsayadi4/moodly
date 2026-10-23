@@ -16,7 +16,7 @@ async function submit() {
   loading.value = true
   try {
     await auth.login(email.value, password.value)
-    router.push('/')
+    router.push(auth.isManager ? '/team' : '/')
   } catch (e) {
     if (e.status === 400) error.value = 'Email ou mot de passe incorrect'
     else if (e.status === 429) error.value = 'Trop de tentatives, réessayez dans une minute'
