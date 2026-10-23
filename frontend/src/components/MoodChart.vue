@@ -26,20 +26,20 @@ const chartData = computed(() => ({
     {
       label: 'Moral moyen',
       data: props.series.map((p) => p.average),
-      borderColor: '#1e3a5f',
-      backgroundColor: 'rgba(30, 58, 95, 0.07)',
+      borderColor: '#7c78e0',
+      backgroundColor: 'rgba(124, 120, 224, 0.12)',
       borderWidth: 2,
       fill: true,
-      tension: 0.25,
+      tension: 0.35,
       pointRadius: 2,
       pointHoverRadius: 4,
-      pointBackgroundColor: '#1e3a5f',
+      pointBackgroundColor: '#7c78e0',
       spanGaps: false,
     },
     {
       label: "Seuil d'alerte (2,5)",
       data: props.series.map(() => 2.5),
-      borderColor: '#b42318',
+      borderColor: '#ee9aa1',
       borderDash: [4, 4],
       borderWidth: 1,
       pointRadius: 0,
@@ -55,19 +55,19 @@ const options = {
     y: {
       min: 1,
       max: 5,
-      ticks: { stepSize: 1, color: '#6b7280', font: { size: 11 } },
-      grid: { color: '#eef0f3' },
+      ticks: { stepSize: 1, color: '#8a88a0', font: { size: 11 } },
+      grid: { color: '#f0eff6' },
       border: { display: false },
     },
     x: {
-      ticks: { maxTicksLimit: 6, color: '#6b7280', font: { size: 11 } },
+      ticks: { maxTicksLimit: 6, color: '#8a88a0', font: { size: 11 } },
       grid: { display: false },
     },
   },
   plugins: {
     legend: {
       position: 'bottom',
-      labels: { boxWidth: 10, boxHeight: 2, color: '#6b7280', font: { size: 11 } },
+      labels: { boxWidth: 10, boxHeight: 2, color: '#8a88a0', font: { size: 11 } },
     },
     tooltip: {
       callbacks: {

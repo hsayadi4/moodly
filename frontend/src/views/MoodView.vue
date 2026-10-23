@@ -106,7 +106,7 @@ onMounted(load)
             :key="m.score"
             class="mood-btn"
             :class="{ selected: selectedScore === m.score }"
-            :style="selectedScore === m.score ? { color: m.color, background: m.color + '12' } : {}"
+            :style="{ color: m.color, background: m.soft }"
             @click="selectedScore = m.score"
           >
             <MoodIcon :score="m.score" :size="30" />
@@ -152,7 +152,7 @@ onMounted(load)
             <span
               class="dot"
               :class="{ empty: !d.mood }"
-              :style="d.mood ? { background: d.mood.color } : {}"
+              :style="d.mood ? { background: d.mood.color, boxShadow: '0 0 0 4px ' + d.mood.soft } : {}"
               :title="d.mood ? d.mood.label : 'Pas de réponse'"
             ></span>
             <span class="muted small">{{ d.label }}</span>
@@ -179,17 +179,19 @@ onMounted(load)
   align-items: center;
   gap: 6px;
   padding: 12px 2px 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: #9aa3b2;
+  border: 2px solid transparent;
+  border-radius: 14px;
   cursor: pointer;
+  opacity: 0.85;
+  transition: transform 0.15s, opacity 0.15s;
 }
 .mood-btn:hover {
-  border-color: #c5cbd4;
+  opacity: 1;
 }
 .mood-btn.selected {
   border-color: currentColor;
+  opacity: 1;
+  transform: translateY(-2px);
 }
 .mood-label {
   font-size: 12px;
@@ -205,8 +207,8 @@ onMounted(load)
   margin-bottom: 8px;
 }
 .tag {
-  padding: 7px 12px;
-  border-radius: 6px;
+  padding: 7px 13px;
+  border-radius: 20px;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
@@ -214,10 +216,10 @@ onMounted(load)
   font-size: 13px;
 }
 .tag.active {
-  background: var(--primary-light);
-  border-color: var(--primary);
+  background: var(--lavender);
+  border-color: #c9c5f6;
   color: var(--primary);
-  font-weight: 600;
+  font-weight: 700;
 }
 .privacy {
   display: flex;
@@ -243,6 +245,6 @@ onMounted(load)
   border-radius: 50%;
 }
 .dot.empty {
-  border: 1.5px dashed #c5cbd4;
+  border: 1.5px dashed #cfcde0;
 }
 </style>

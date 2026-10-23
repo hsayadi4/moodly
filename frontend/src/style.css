@@ -1,15 +1,21 @@
 :root {
-  --primary: #1e3a5f;
-  --primary-light: #eaf0f6;
-  --bg: #f4f5f7;
+  --primary: #6a67ce;
+  --primary-hover: #5b58c0;
+  --primary-light: #efeefe;
+  --bg: #f6f5fb;
   --surface: #ffffff;
-  --border: #e1e4e9;
-  --text: #1c2430;
-  --muted: #6b7280;
-  --danger: #b42318;
-  --warning: #b54708;
-  --success: #1f6f4a;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --border: #ebe9f4;
+  --text: #2b2a3d;
+  --muted: #7c7a91;
+  --danger: #d1555f;
+  --warning: #c9822f;
+  --success: #3a9e75;
+  --lavender: #efedff;
+  --mint: #e4f5ed;
+  --peach: #fef0e4;
+  --sky: #e6f1fc;
+  --rose: #fde8ea;
+  font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color: var(--text);
   background: var(--bg);
 }
@@ -37,16 +43,14 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 14px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 650;
-  font-size: 17px;
+  font-weight: 700;
+  font-size: 18px;
   color: var(--primary);
 }
 
@@ -55,14 +59,14 @@ body {
 }
 
 h1 {
-  font-size: 22px;
-  font-weight: 650;
+  font-size: 24px;
+  font-weight: 700;
   margin: 0 0 4px;
 }
 
 h2 {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   margin: 0 0 14px;
 }
 
@@ -74,10 +78,10 @@ h2 {
 
 .card {
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 16px;
   padding: 18px;
   margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(90, 80, 170, 0.06);
 }
 
 label {
@@ -92,14 +96,16 @@ input {
   padding: 11px 12px;
   font-size: 15px;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
+  border-radius: 10px;
+  background: #fbfbfe;
   color: var(--text);
+  font-family: inherit;
 }
 
 input:focus {
-  outline: 2px solid var(--primary);
+  outline: 2px solid #b9b6f3;
   outline-offset: -1px;
+  background: var(--surface);
 }
 
 .btn {
@@ -107,16 +113,17 @@ input:focus {
   margin-top: 16px;
   padding: 12px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: inherit;
   color: white;
   background: var(--primary);
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
 }
 
 .btn:hover {
-  background: #17304f;
+  background: var(--primary-hover);
 }
 
 .btn:disabled {
@@ -130,6 +137,7 @@ input:focus {
   padding: 0;
   color: var(--primary);
   font-size: 13px;
+  font-family: inherit;
   cursor: pointer;
 }
 
@@ -153,7 +161,11 @@ input:focus {
 .success {
   color: var(--success);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+button {
+  font-family: inherit;
 }
 
 .tabs {
@@ -163,24 +175,25 @@ input:focus {
   right: 0;
   display: flex;
   justify-content: center;
+  gap: 8px;
   background: var(--surface);
   border-top: 1px solid var(--border);
-  padding-bottom: env(safe-area-inset-bottom);
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
 }
 
 .tabs a {
   flex: 1;
-  max-width: 240px;
+  max-width: 220px;
   text-align: center;
-  padding: 15px 0 13px;
+  padding: 10px 0;
   color: var(--muted);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
-  border-top: 2px solid transparent;
+  border-radius: 12px;
 }
 
 .tabs a.router-link-exact-active {
   color: var(--primary);
-  border-top-color: var(--primary);
+  background: var(--primary-light);
 }

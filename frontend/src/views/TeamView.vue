@@ -45,17 +45,17 @@ onMounted(load)
 
       <template v-else>
         <div class="kpis">
-          <div class="card kpi">
+          <div class="card kpi lavender">
             <span class="kpi-label">Moral moyen</span>
             <span class="kpi-value">
               {{ stats.average !== null ? formatNumber(stats.average) : '–' }}<small>/5</small>
             </span>
           </div>
-          <div class="card kpi">
+          <div class="card kpi mint">
             <span class="kpi-label">Participation</span>
             <span class="kpi-value">{{ stats.participation }}<small>%</small></span>
           </div>
-          <div class="card kpi">
+          <div class="card kpi sky">
             <span class="kpi-label">Tendance 7 j</span>
             <span class="kpi-value" :class="{ up: stats.trend > 0, down: stats.trend < 0 }">
               {{ trendText(stats.trend) }}
@@ -107,6 +107,16 @@ onMounted(load)
   gap: 6px;
   padding: 14px 12px;
   margin-bottom: 14px;
+  box-shadow: none;
+}
+.kpi.lavender {
+  background: var(--lavender);
+}
+.kpi.mint {
+  background: var(--mint);
+}
+.kpi.sky {
+  background: var(--sky);
 }
 .kpi-label {
   font-size: 12px;
@@ -129,19 +139,20 @@ onMounted(load)
   color: var(--danger);
 }
 .alert {
-  padding: 10px 12px;
+  padding: 11px 14px;
   margin-bottom: 10px;
   font-size: 13px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--primary);
-  border-radius: 6px;
+  border-radius: 12px;
+  background: var(--lavender);
+  color: #4a47a8;
 }
 .alert.critical {
-  border-left-color: var(--danger);
+  background: var(--rose);
+  color: #a63d46;
 }
 .alert.warning {
-  border-left-color: var(--warning);
+  background: var(--peach);
+  color: #9a5a1c;
 }
 .note {
   margin: 12px 0 0;
@@ -156,7 +167,7 @@ onMounted(load)
   flex-direction: column;
   gap: 2px;
   padding: 10px 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #f1f0f7;
   font-size: 14px;
 }
 .reasons li:last-child {
@@ -168,6 +179,7 @@ onMounted(load)
   justify-content: space-between;
 }
 .reason-share {
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--primary);
 }
 </style>

@@ -1,10 +1,10 @@
-// les 5 niveaux d'humeur
+// les 5 niveaux d'humeur (couleur du trait + fond pastel)
 export const MOODS = [
-  { score: 1, label: 'Très mal', color: '#b42318' },
-  { score: 2, label: 'Pas bien', color: '#c4561d' },
-  { score: 3, label: 'Neutre', color: '#7a8699' },
-  { score: 4, label: 'Bien', color: '#3d8a5f' },
-  { score: 5, label: 'Très bien', color: '#1f6f4a' },
+  { score: 1, label: 'Très mal', color: '#e0707a', soft: '#fde8ea' },
+  { score: 2, label: 'Pas bien', color: '#ec9658', soft: '#fef0e4' },
+  { score: 3, label: 'Neutre', color: '#d2ab3e', soft: '#fdf6dc' },
+  { score: 4, label: 'Bien', color: '#5cb586', soft: '#e5f6ec' },
+  { score: 5, label: 'Très bien', color: '#3aa99a', soft: '#ddf3f0' },
 ]
 
 export function getMood(score) {
