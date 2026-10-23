@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
+import { formatNumber } from '../moods'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
 
@@ -25,18 +26,21 @@ const chartData = computed(() => ({
     {
       label: 'Moral moyen',
       data: props.series.map((p) => p.average),
-      borderColor: '#5b5bd6',
-      backgroundColor: 'rgba(91, 91, 214, 0.12)',
+      borderColor: '#1e3a5f',
+      backgroundColor: 'rgba(30, 58, 95, 0.07)',
+      borderWidth: 2,
       fill: true,
-      tension: 0.3,
-      pointRadius: 3,
+      tension: 0.25,
+      pointRadius: 2,
+      pointHoverRadius: 4,
+      pointBackgroundColor: '#1e3a5f',
       spanGaps: false,
     },
     {
-      label: "Seuil d'alerte",
+      label: "Seuil d'alerte (2,5)",
       data: props.series.map(() => 2.5),
-      borderColor: '#e5484d',
-      borderDash: [6, 6],
+      borderColor: '#b42318',
+      borderDash: [4, 4],
       borderWidth: 1,
       pointRadius: 0,
       fill: false,
@@ -51,21 +55,24 @@ const options = {
     y: {
       min: 1,
       max: 5,
-      ticks: {
-        stepSize: 1,
-        callback: (value) => ['', '😫', '😕', '😐', '🙂', '😄'][value],
-      },
+      ticks: { stepSize: 1, color: '#6b7280', font: { size: 11 } },
+      grid: { color: '#eef0f3' },
+      border: { display: false },
     },
     x: {
-      ticks: { maxTicksLimit: 8 },
+      ticks: { maxTicksLimit: 6, color: '#6b7280', font: { size: 11 } },
+      grid: { display: false },
     },
   },
   plugins: {
-    legend: { position: 'bottom', labels: { boxWidth: 12 } },
+    legend: {
+      position: 'bottom',
+      labels: { boxWidth: 10, boxHeight: 2, color: '#6b7280', font: { size: 11 } },
+    },
     tooltip: {
       callbacks: {
         label: (item) =>
-          item.datasetIndex === 0 ? `Moyenne : ${item.raw} / 5` : "Seuil d'alerte",
+          item.datasetIndex === 0 ? `Moyenne : ${formatNumber(item.raw)} / 5` : "Seuil d'alerte",
       },
     },
   },
@@ -80,6 +87,6 @@ const options = {
 
 <style scoped>
 .chart {
-  height: 260px;
+  height: 240px;
 }
 </style>

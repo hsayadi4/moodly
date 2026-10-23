@@ -25,7 +25,7 @@ function getAlerts(lastWeek, trend, participation, worstTag) {
   }
 
   if (trend !== null && trend <= -0.5) {
-    alerts.push({ level: 'warning', message: `Baisse de ${Math.abs(trend)} point par rapport à la semaine dernière.` });
+    alerts.push({ level: 'warning', message: `Baisse de ${String(Math.abs(trend)).replace(".", ",")} point par rapport à la semaine dernière.` });
   }
 
   if (participation < 40) {
@@ -33,7 +33,7 @@ function getAlerts(lastWeek, trend, participation, worstTag) {
   }
 
   if (worstTag) {
-    alerts.push({ level: 'info', message: `Raison la plus citée quand le moral est bas : ${worstTag.emoji} ${worstTag.label}` });
+    alerts.push({ level: 'info', message: `Facteur le plus cité quand le moral est bas : ${worstTag.label}.` });
   }
 
   return alerts;

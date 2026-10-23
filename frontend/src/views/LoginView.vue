@@ -21,8 +21,8 @@ async function submit() {
     await auth.login(email.value, password.value)
     router.push(auth.isManager ? '/team' : '/')
   } catch (e) {
-    if (e.status === 400) error.value = 'Email ou mot de passe incorrect'
-    else if (e.status === 429) error.value = 'Trop de tentatives, réessayez dans une minute'
+    if (e.status === 400) error.value = 'Email ou mot de passe incorrect.'
+    else if (e.status === 429) error.value = 'Trop de tentatives, réessayez dans une minute.'
     else error.value = e.message
   } finally {
     loading.value = false
@@ -44,12 +44,14 @@ function fillDemo(type) {
 
 <template>
   <div class="login">
-    <img src="/favicon.svg" alt="" width="72" height="72" />
-    <h1>Moodly</h1>
-    <p class="muted">Comment ça va au travail aujourd'hui ?</p>
+    <div class="brand">
+      <img src="/favicon.svg" alt="" width="52" height="52" />
+      <h1>Moodly</h1>
+      <p class="muted">Baromètre du bien-être au travail</p>
+    </div>
 
     <form class="card" @submit.prevent="submit">
-      <label for="email">Email</label>
+      <label for="email">Adresse email</label>
       <input id="email" v-model="email" type="email" autocomplete="username" required />
 
       <label for="password">Mot de passe</label>
@@ -58,18 +60,19 @@ function fillDemo(type) {
       <p v-if="error" class="error">{{ error }}</p>
 
       <button class="btn" type="submit" :disabled="loading">
-        {{ loading ? 'Connexion...' : 'Se connecter' }}
+        {{ loading ? 'Connexion…' : 'Se connecter' }}
       </button>
     </form>
 
-    <div class="demo">
-      <p class="muted small">Comptes de démo :</p>
+    <p class="demo muted small">
+      Comptes de démonstration :
       <button class="link-btn" @click="fillDemo('employee')">Employé</button>
+      ·
       <button class="link-btn" @click="fillDemo('manager')">Manager</button>
-    </div>
+    </p>
 
     <div class="server">
-      <button class="link-btn small" @click="showServer = !showServer">⚙️ Serveur</button>
+      <button class="link-btn muted small" @click="showServer = !showServer">Paramètres du serveur</button>
       <div v-if="showServer" class="card">
         <label for="server">Adresse de l'API</label>
         <input id="server" v-model="serverUrl" type="url" placeholder="http://192.168.1.20:1337" />
@@ -81,29 +84,32 @@ function fillDemo(type) {
 
 <style scoped>
 .login {
-  text-align: center;
-  padding-top: 40px;
+  padding-top: 48px;
 }
-.login h1 {
-  margin: 12px 0 4px;
+.brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.brand h1 {
+  margin: 14px 0 4px;
   color: var(--primary);
 }
-form {
-  text-align: left;
-  margin-top: 28px;
+.brand p {
+  margin: 0;
+  font-size: 14px;
+}
+form label:first-child {
+  margin-top: 0;
 }
 .demo {
-  margin-top: 20px;
-}
-.demo .link-btn {
-  margin: 0 8px;
+  text-align: center;
 }
 .server {
-  margin-top: 24px;
-  text-align: left;
+  margin-top: 28px;
+  text-align: center;
 }
-.server .link-btn {
-  display: block;
-  margin: 0 auto 10px;
+.server .card {
+  text-align: left;
+  margin-top: 12px;
 }
 </style>

@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import api from '../api'
 import { useAuthStore } from '../stores/auth'
 import { MOODS, getMood } from '../moods'
+import MoodIcon from '../components/MoodIcon.vue'
 
 const auth = useAuthStore()
 
@@ -35,7 +36,7 @@ const last7Days = computed(() => {
     const found = history.value.find((h) => h.day === iso)
     days.push({
       iso,
-      letter: d.toLocaleDateString('fr-FR', { weekday: 'short' }).slice(0, 3),
+      label: d.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', ''),
       mood: found ? getMood(found.score) : null,
     })
   }
@@ -77,7 +78,7 @@ async function save() {
   saving.value = true
   try {
     await api.saveTodayMood(selectedScore.value, selectedTags.value)
-    message.value = alreadyDone.value ? 'Humeur mise à jour !' : 'Merci ! Ton humeur est enregistrée.'
+    message.value = alreadyDone.value ? 'Votre réponse a été mise à jour.' : 'Merci, votre réponse a été enregistrée.'
     alreadyDone.value = true
     history.value = (await api.getHistory(7)).data
   } catch (e) {
@@ -91,29 +92,31 @@ onMounted(load)
 
 <template>
   <div>
-    <h2>Salut {{ firstName }} 👋</h2>
-    <p class="muted date">{{ todayLabel }}</p>
+    <h1>Bonjour {{ firstName }}</h1>
+    <p class="subtitle date">{{ todayLabel }}</p>
 
-    <p v-if="loading" class="muted">Chargement...</p>
+    <p v-if="loading" class="muted">Chargement…</p>
 
     <template v-else>
       <section class="card">
-        <h3>Comment tu te sens aujourd'hui ?</h3>
+        <h2>Comment vous sentez-vous aujourd'hui ?</h2>
         <div class="moods">
           <button
             v-for="m in MOODS"
             :key="m.score"
             class="mood-btn"
             :class="{ selected: selectedScore === m.score }"
-            :style="selectedScore === m.score ? { borderColor: m.color, background: m.color + '22' } : {}"
+            :style="selectedScore === m.score ? { color: m.color, background: m.color + '12' } : {}"
             @click="selectedScore = m.score"
           >
-            <span class="emoji">{{ m.emoji }}</span>
-            <span class="small">{{ m.label }}</span>
+            <MoodIcon :score="m.score" :size="30" />
+            <span class="mood-label">{{ m.label }}</span>
           </button>
         </div>
 
-        <h3>Pourquoi ? <span class="muted small">(facultatif, 3 max)</span></h3>
+        <h2 class="factors-title">
+          Facteurs <span class="muted small">— facultatif, 3 maximum</span>
+        </h2>
         <div class="tags">
           <button
             v-for="tag in tags"
@@ -122,7 +125,7 @@ onMounted(load)
             :class="{ active: selectedTags.includes(tag.documentId) }"
             @click="toggleTag(tag.documentId)"
           >
-            {{ tag.emoji }} {{ tag.label }}
+            {{ tag.label }}
           </button>
         </div>
 
@@ -130,20 +133,29 @@ onMounted(load)
         <p v-if="message" class="success">{{ message }}</p>
 
         <button class="btn" :disabled="!selectedScore || saving" @click="save">
-          {{ saving ? 'Envoi...' : alreadyDone ? 'Modifier mon humeur' : 'Envoyer' }}
+          {{ saving ? 'Envoi…' : alreadyDone ? 'Mettre à jour' : 'Valider' }}
         </button>
 
         <p class="privacy small">
-          🔒 Ta réponse est anonyme : ton manager voit seulement la moyenne de l'équipe.
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2" />
+            <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2" />
+          </svg>
+          Réponse anonyme : votre manager ne voit que des moyennes d'équipe.
         </p>
       </section>
 
       <section class="card">
-        <h3>Ma semaine</h3>
+        <h2>Vos 7 derniers jours</h2>
         <div class="week">
           <div v-for="d in last7Days" :key="d.iso" class="day">
-            <span class="emoji-small">{{ d.mood ? d.mood.emoji : '·' }}</span>
-            <span class="muted small">{{ d.letter }}</span>
+            <span
+              class="dot"
+              :class="{ empty: !d.mood }"
+              :style="d.mood ? { background: d.mood.color } : {}"
+              :title="d.mood ? d.mood.label : 'Pas de réponse'"
+            ></span>
+            <span class="muted small">{{ d.label }}</span>
           </div>
         </div>
       </section>
@@ -153,56 +165,67 @@ onMounted(load)
 
 <style scoped>
 .date {
-  margin-top: -8px;
   text-transform: capitalize;
 }
 .moods {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 .mood-btn {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 10px 2px;
-  border: 2px solid transparent;
-  border-radius: 12px;
-  background: #f4f4f8;
+  gap: 6px;
+  padding: 12px 2px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: #9aa3b2;
   cursor: pointer;
 }
-.mood-btn .emoji {
-  font-size: 30px;
+.mood-btn:hover {
+  border-color: #c5cbd4;
 }
 .mood-btn.selected {
-  transform: scale(1.05);
+  border-color: currentColor;
+}
+.mood-label {
+  font-size: 12px;
+  color: var(--text);
+}
+.factors-title {
+  margin-bottom: 10px;
 }
 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 .tag {
-  padding: 8px 12px;
-  border-radius: 20px;
-  border: 1px solid #ddd;
-  background: white;
+  padding: 7px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
 }
 .tag.active {
-  background: var(--primary);
+  background: var(--primary-light);
   border-color: var(--primary);
-  color: white;
+  color: var(--primary);
+  font-weight: 600;
 }
 .privacy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   margin: 14px 0 0;
-  color: #666;
-  text-align: center;
+  color: var(--muted);
 }
 .week {
   display: flex;
@@ -212,10 +235,14 @@ onMounted(load)
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
-.emoji-small {
-  font-size: 24px;
-  height: 30px;
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+.dot.empty {
+  border: 1.5px dashed #c5cbd4;
 }
 </style>
